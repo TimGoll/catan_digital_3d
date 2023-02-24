@@ -148,3 +148,30 @@ adjacent city.
 - Treasure Hunters [[source]](https://www.thingiverse.com/thing:1417797)
 - [!] The Storm Tides [[source]](https://www.thingiverse.com/thing:1485448)
 - Desert Ogres [[source]](https://www.thingiverse.com/thing:1430387)
+
+## Hardware Ideas
+
+### Hex Communication
+
+- each of the six sides of the tile has 5 connections
+  - VCC / GND
+  - RX / TX
+  - data busy (if a slave wants to transmit data, it checks if busy is low before pulling it high and transmitting the data after that)
+- each hex has its own MCU
+- when the hexgrid loses power, the grid has to be rebuit
+  - the master first pulls the data busy line high
+  - the slaves then know that they can't transmit data and wait until the master requested their state one by one
+
+### Placement Detection
+
+- there are three placement positions
+  - corners
+  - edges
+  - center
+- the first two are a bit more complicated because there can be many things there and the placed items can be upgraded as well
+- placed parts can be detected by their resistance
+  - there are 6 colors
+  - there are less than 10 possible buildings
+- parts can have upgrades / subparts that are measured by a separate pin
+  - there are probably less than 10 upgrades
+- some parts have a status LED, so there should be a pin to feed through the LED
