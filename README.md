@@ -4,7 +4,7 @@
 
 ### Games
 
-**Base Game:** [[rules]](https://www.catan.com/sites/default/files/2021-06/catan_base_rules_2020_200707.pdf)
+**Base Game:** [[rules]](https://www.catan.com/sites/default/files/2021-06/catan_base_rules_2020_200707.pdf) [[source]](https://www.thingiverse.com/thing:2525047)
 
 - 19x land tiles:
   | wood | wool | brick | ore | grain | desert |
@@ -70,6 +70,40 @@
 - 4x cities each
 - 15x roads each
 
+**Seafarers:** [[rules]](https://www.catan.de/sites/default/files/2022-08/CATAN_See34_Manual_0.pdf) [[source]](https://www.thingiverse.com/thing:3072272)
+
+- 11x land tiles:
+  | wood | wool | brick | ore | grain | gold | desert | water |
+  | --- | --- | --- | --- | --- | --- | --- | --- |
+  | 1x | 1x | 2x | 2x | 1x | 2x | 2x | 19x |
+
+- 1x harbors:
+  | 3:1 |
+  | --- |
+  | 1x |
+
+- 10x numbers:
+  | 2 | 3 | 4 | 5 | 6 | 8 | 9 | 10 | 11 | 12 |
+  | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+  | 1x | 1x | 1x | 1x | 1x | 1x | 1x | 1x | 1x | 1x |
+
+- 15x ships each
+- 1x pirate
+
+**Seafarers - 5&6 players:** [[rules]](https://www.catan.de/sites/default/files/2022-08/CATAN_See56_Manual_1.pdf)
+
+- 10x land tiles:
+  | gold | desert | water |
+  | --- | --- | --- |
+  | 2x | 1x | 7x |
+
+- 1x harbors:
+  | wool |
+  | --- |
+  | 1x |
+
+- 15x ships each
+
 **Variation: Towers and Lighthouses:** [[source]](https://www.thingiverse.com/thing:2289838)
 
 > Allows each player to place two lighthouses / towers
@@ -117,6 +151,8 @@ adjacent city.
 > - the robber / plague can not be placed there
 > - happens before the normal 7 action happens
 
+- citadel hex
+
 **Variant: Factories of Catan:** [[source]](https://www.thingiverse.com/thing:1410226)
 
 > Factories are placed as settlements and allow the player to get resources from adjacent hex
@@ -149,6 +185,41 @@ adjacent city.
 - [!] The Storm Tides [[source]](https://www.thingiverse.com/thing:1485448)
 - Desert Ogres [[source]](https://www.thingiverse.com/thing:1430387)
 
+## Parts List
+
+| | | Hex Tiles | Displays | Magnets | Pin Male | Pin Female |
+| --- | --- | --- | --- | --- | --- | --- |
+| Base | wood | 4 | 4 | x | 200 | 72 |
+| | wool | 4 | 4 | x | 200 | 72 |
+| | brick | 4 | 4 | x | 200 | 72 |
+| | ore | 4 | 4 | x | 200 | 72 |
+| | grain | 4 | 4 | x | 200 | 72 |
+| | desert | 1 | ? | x | 50 | 18 |
+| | water (harbor) | 9 | 0 | x | 450 | 162 |
+| | water (plain) | 9 | 0 | x | 450 | 162 |
+| Base 5&6 players | wood | 2 | 2 | x | 100 | 36 |
+| | wool | 2 | 2 | x | 100 | 36 |
+| | brick | 2 | 2 | x | 100 | 36 |
+| | ore | 2 | 2 | x | 100 | 36 |
+| | grain | 2 | 2 | x | 100 | 36 |
+| | desert | 1 | 1 | x | 50 | 18 |
+| | water (harbor) | 2 | 0 | x | 100 | 36 |
+| | water (plain) | 2 | 0 | x | 100 | 36 |
+| Seafarers | wood | 1 | 1 | x | 50 | 18 |
+| | wool | 1 | 1 | x | 50 | 18 |
+| | brick | 2 | 2 | x | 100 | 36 |
+| | ore | 2 | 2 | x | 100 | 36 |
+| | grain | 1 | 1 | x | 50 | 18 |
+| | gold | 2 | 2 | x | 100 | 36 |
+| | desert | 2 | ? | x | 100 | 36 |
+| | water (harbor) | 1 | 0 | x | 50 | 18 |
+| | water (plain) | 34 | 0 | x | 1700 | 612 |
+| Seafarers 5&6 players | gold | 2 | 2 | x | 100 | 36 |
+| | desert | 1 | ? | x | 50 | 18 |
+| | water (harbor) | 1 | 0 | x | 50 | 18 |
+| | water (plain) | 10 | 0 | x | 500 | 180 |
+| The Magic 7 | citadel | 1 | 0 | x | 48 | 18 |
+
 ## Hardware Ideas
 
 ### Hex Communication
@@ -158,7 +229,7 @@ adjacent city.
   - RX / TX
   - data busy (if a slave wants to transmit data, it checks if busy is low before pulling it high and transmitting the data after that)
 - each hex has its own MCU
-- when the hexgrid loses power, the grid has to be rebuit
+- when the hexgrid loses power, the grid has to be rebuilt
   - the master first pulls the data busy line high
   - the slaves then know that they can't transmit data and wait until the master requested their state one by one
 
@@ -175,3 +246,24 @@ adjacent city.
 - parts can have upgrades / subparts that are measured by a separate pin
   - there are probably less than 10 upgrades
 - some parts have a status LED, so there should be a pin to feed through the LED
+
+## Software Ideas
+
+- Handling Hexmaps: https://www.redblobgames.com/grids/hexagons/
+- I2C Slave/Master switching: https://deepbluembedded.com/stm32-i2c-tutorial-hal-examples-slave-dma/
+
+### Detection of New/Removed Hey Fields
+
+- as soon as a hex field has power, it urns on its output detection pins (one GPIO for all six sides)
+- if a hex is removed, the neighboring hex detect the power loss
+  - the neighboring hex send their id and the info about the lost neighbor one by one as a master to the host, the host then reconstructs the position of the lost hex
+- if a hex is added, the neighboring hex detect the rising edge
+  - the newly connected hex sends its address as the master to the host
+  - the host then requests all slaves to report if they got a new neighbor
+  - they all answer one by one in master mode to the host which then reconstructs the position of the field
+  - the master then assigns a (dice) number and requests all info about this field
+
+### Handling Edge and Corner Info
+
+- each hex tracks their own info and updates the host on change
+- each hex handles three edges and two corners
