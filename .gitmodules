@@ -1,3 +1,0 @@
-[submodule "software/i2c_tests/source/libopencm3"]
-	path = software/i2c_tests/source/libopencm3
-	url = https://github.com/libopencm3/libopencm3
